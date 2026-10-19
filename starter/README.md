@@ -1,16 +1,17 @@
-# Starter Ch02 — Refactoring EduHub với SOLID và Design Patterns
+# EduHub Ch02 — Refactoring với SOLID và Design Patterns
 
-Điểm xuất phát của bài tập Ch02 (xem `de-bai.html` và `rubric.html`). Dự án build được ngay, nhưng `ClubManager` cố tình vi phạm SOLID.
+Dự án minh họa cách tách `ClubManager` thành domain, services, repositories và các abstraction nhỏ. Bản phân tích các vi phạm SOLID ban đầu nằm tại [`docs/solid-analysis.md`](docs/solid-analysis.md).
 
-## Việc cần làm
+## Cấu trúc
 
-Các đoạn `// TODO` nằm ở:
+- `Ch02.Refactor/Domain`: quy tắc nghiệp vụ của `Club`, `Member`, `Event`.
+- `Ch02.Refactor/Services`: `ClubService`, `EventService`, `ReportService` và interface.
+- `Ch02.Refactor/Repositories`: repository interface, bộ nhớ trong và `LoggingClubRepository` decorator.
+- `Ch02.Refactor/Notifications`: notification services và factory theo `NotificationChannel`.
+- `Ch02.Refactor/Patterns`: observer cho sự kiện và strategy cho báo cáo Console/CSV.
+- `Ch02.Refactor.Tests`: kiểm thử AAA cho domain và design patterns.
 
-- `Ch02.Refactor/ClubManager.cs`: danh sách TODO 1 đến 5 ở đầu file, TODO Factory/Observer/Strategy/Decorator ngay tại method liên quan.
-- `Ch02.Refactor/Domain/Club.cs`, `Domain/Event.cs`: hoàn thiện `Create`, `HasRoom`, `Register`, `CheckIn`.
-- `Ch02.Refactor.Tests/DomainTests.cs`: bỏ `Skip` và viết thân test theo mẫu Arrange-Act-Assert.
-
-## Lệnh
+## Chạy
 
 ```bash
 dotnet build Ch02.Refactor.sln
@@ -18,6 +19,4 @@ dotnet test Ch02.Refactor.sln
 dotnet run --project Ch02.Refactor
 ```
 
-## Nộp bài
-
-Làm trên nhánh `feature/solid-refactor`, commit theo Conventional Commits, rebase lên `main` rồi mở Pull Request (mô tả: what, why, how to test).
+`Program.cs` là composition root, nơi các implementation cụ thể được tạo và truyền vào services qua constructor.
