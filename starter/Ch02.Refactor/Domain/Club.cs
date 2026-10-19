@@ -1,6 +1,6 @@
 namespace EduHub.Ch02.Domain;
 
-/// <summary>Câu lạc bộ. Quy tắc nghiệp vụ nên nằm ở đây, không nằm trong ClubManager.</summary>
+/// <summary>Câu lạc bộ — chứa quy tắc nghiệp vụ của chính nó, không chứa logic hạ tầng.</summary>
 public class Club
 {
     public const int MaxMembers = 50;
@@ -10,22 +10,17 @@ public class Club
     public required string Name { get; set; }
     public required string Description { get; set; }
 
-    /// <summary>Tạo câu lạc bộ mới sau khi kiểm tra tên hợp lệ.</summary>
+    /// <summary>Tạo CLB mới, kiểm tra tên hợp lệ (bắt buộc, không quá 100 ký tự).</summary>
     public static Club Create(string name, string description)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Club name is required", nameof(name));
+            throw new ArgumentException("Club name is required");
         if (name.Length > MaxNameLength)
-            throw new ArgumentException("Club name too long", nameof(name));
+            throw new ArgumentException("Club name too long");
 
-        return new Club
-        {
-            Id = Guid.NewGuid(),
-            Name = name,
-            Description = description
-        };
+        return new Club { Id = Guid.NewGuid(), Name = name, Description = description };
     }
 
-    /// <summary>Cho biết câu lạc bộ còn chỗ khi chưa đạt số thành viên tối đa.</summary>
+    /// <summary>CLB còn nhận thêm thành viên không (tối đa 50)?</summary>
     public bool HasRoom(int currentMemberCount) => currentMemberCount < MaxMembers;
 }
